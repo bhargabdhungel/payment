@@ -6,7 +6,7 @@ import userRouter from './routes/user/index.js';
 dotenv.config();
 const app = express();
 app.use(express.json());
-// connectDatabase();
+connectDatabase();
 
 
 
