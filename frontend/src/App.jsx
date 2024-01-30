@@ -4,7 +4,7 @@ function App() {
   return (
     <>
     <h1>
-      HI
+      my server is {import.meta.env.VITE_SERVER}
     </h1>
     </>
   )
