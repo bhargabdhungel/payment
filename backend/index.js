@@ -1,12 +1,16 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import connectDatabase from './db/conifg.js';
+import userRouter from './routes/user/index.js';
 
 dotenv.config();
 const app = express();
 app.use(express.json());
+connectDatabase();
 
 
 
+app.use("/api/user", userRouter);
 
 
 
