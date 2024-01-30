@@ -6,11 +6,11 @@ import userRouter from './routes/user/index.js';
 dotenv.config();
 const app = express();
 app.use(express.json());
-connectDatabase();
+// connectDatabase();
 
 
 
-app.use("/api/user", userRouter);
+// app.use("/api/user", userRouter);
 app.get("/", (req, res) => {
   res.send("API is running");
 });
@@ -18,14 +18,14 @@ app.get("/", (req, res) => {
 
 
 // this is global error handler
-app.use((err,req,res,next) => {
-  console.log(err);
-  console.log(req);
-  return res.status(500).send({
-    message: "Something went wrong",
-    success: false,
-  });
-});
+// app.use((err,req,res,next) => {
+//   console.log(err);
+//   console.log(req);
+//   return res.status(500).send({
+//     message: "Something went wrong",
+//     success: false,
+//   });
+// });
 
 
 app.listen(process.env.PORT, () => {
