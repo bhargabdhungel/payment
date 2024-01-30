@@ -5,10 +5,11 @@ async function signup(req, res) {
   try {
     const { name, email, password, username} = req.body;
 
-    //check if the user already exists
-    const userExists = await User.findOne({ email: email });
+    //check if the user already exists with the email and username both
+
+    const userExists = await User.findOne({ $or: [{ email: email }, { username: username }] });
     if (userExists) {
-      return res.status(409).send({
+      return res.status(400).send({
         message: "User already exists",
         success: false,
       });
