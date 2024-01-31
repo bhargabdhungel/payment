@@ -13,9 +13,10 @@ export default function LoginCard(){
             emailOrUsername: e.target.emailOrUsername.value,
             password: e.target.password.value,
           };
-          const remember = e.target.remember.checked;
+          // const remember = e.target.remember.checked;
           // todo: implement remember me
-          console.log(remember);
+          // console.log(remember);
+          console.log(data);
           try {
             const response = await axios.post(
             
