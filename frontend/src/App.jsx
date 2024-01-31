@@ -1,15 +1,18 @@
 import './App.css'
-function App() {
+import { Routes, Route } from 'react-router-dom'
+import Dashboard from './pages/DashBoard';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
+function App() {
   return (
-    <>
-    <h1>
-      my server is {import.meta.env.VITE_SERVER}
-    </h1>
-    <h2>
-      how are you
-    </h2>
-    </>
+    <div className='dark:bg-gray-600'>
+      <Routes >
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </div>
   )
 }
 
