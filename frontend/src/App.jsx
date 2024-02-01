@@ -12,6 +12,8 @@ function App() {
   useEffect(() => {
     axios.get(import.meta.env.VITE_SERVER + '/').then((res) => {
       setData(res.data);
+    }).catch((err) => {
+      setData(err.message);
     });
   },[]);
   return (
