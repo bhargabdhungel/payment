@@ -1,14 +1,19 @@
 import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingCard from "./LoadingCard";
 
 export default function SignupCard() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  if (loading) return <LoadingCard />;
   return (
-    <div className="w-1/3 flex justify-center mx-auto my-8 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div className="mx-auto my-auto w-full flex justify-center max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
       <form
         className="space-y-4 w-5/6"
         onSubmit={async (e) => {
           e.preventDefault();
+          setLoading(true);
           const data = {
             name: e.target.name.value,
             username: e.target.username.value,
@@ -21,10 +26,12 @@ export default function SignupCard() {
               data
             );
             alert(response.data.message);
+            setLoading(false);
             navigate("/login", { replace: true });
           } catch (err) {
             if (err.response.data) alert(err.response.data.message);
             else alert(err.message);
+            setLoading(false);
           }
         }}
       >
@@ -40,6 +47,7 @@ export default function SignupCard() {
             name="name"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             placeholder="Alice"
+            autoComplete="name"
             required
           />
         </div>
@@ -52,6 +60,7 @@ export default function SignupCard() {
             name="username"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             placeholder="aliceandbob"
+            autoComplete="username"
             required
           />
         </div>
@@ -64,6 +73,7 @@ export default function SignupCard() {
             name="email"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             placeholder="alice@bob.com"
+            autoComplete="email"
             required
           />
         </div>
@@ -75,6 +85,7 @@ export default function SignupCard() {
             type="password"
             name="password"
             placeholder="••••••••"
+            autoComplete="current-password"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
             required
           />

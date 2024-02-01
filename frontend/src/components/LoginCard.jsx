@@ -1,35 +1,38 @@
 import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingCard from "../components/LoadingCard"
 
 export default function LoginCard(){
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  if(loading) return <LoadingCard/>;
   return (
     <div className="mx-auto my-auto w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
       <form
         className="space-y-6"
         onSubmit={async (e) => {
+          setLoading(true);
           e.preventDefault();
           const data = {
             emailOrUsername: e.target.emailOrUsername.value,
             password: e.target.password.value,
           };
-          // const remember = e.target.remember.checked;
-          // todo: implement remember me
-          // console.log(remember);
-          console.log(data);
           try {
             const response = await axios.post(
             
               import.meta.env.VITE_SERVER + "/api/user/login",
               data
             );
-            alert(response.data.message);
             const token = response.data.token;
             localStorage.setItem("token", token);
+            setLoading(false);
             navigate("/", { replace: true });
           } catch (err) {
+            setLoading(false);
             if (err.response.data.message) alert(err.response.data.message);
             else alert(err.message);
+            setLoading(false);
           }
         }}
       >

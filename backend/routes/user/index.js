@@ -6,14 +6,15 @@ import validateSignupInput from "../../validation/signupInput.js";
 import addFriend from "./addFriend.js";
 import friends from "./friends.js";
 import search from "./search.js";
+import verify from "./verify.js";
 
 const userRouter = Router();
 
-
-userRouter.post("/signup",validateSignupInput,signup);
+userRouter.post("/signup", validateSignupInput, signup);
 userRouter.post("/login", login);
 userRouter.post("/addFriend", loggedIn, addFriend);
-userRouter.get("/search",loggedIn,search);
-userRouter.get("/friends",loggedIn,friends);
+userRouter.get("/search", loggedIn, search);
+userRouter.get("/friends", loggedIn, friends);
+userRouter.get("/verify", verify);
 
 export default userRouter;

@@ -1,17 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import useLoggedIn from "../hooks/useLoggedIn";
+import { useEffect } from "react";
+import LoadingCard from "../components/LoadingCard";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const {loggedIn, loading} = useLoggedIn();
+
+  useEffect(() => {
+    if(!loading && !loggedIn) navigate("/login", { replace: true });
+  }, [loggedIn,loading,navigate]);
+
+  if(loading) return <LoadingCard/>
   return (
-    <div>
-      <Navbar />
-      <button
-        onClick={() => {
-          navigate("/login", { replace: true })
-        }}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      > Login</button>
-    </div>
+    <h1>hi</h1>
   );
 }

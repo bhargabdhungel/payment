@@ -1,12 +1,11 @@
-import Navbar from "../components/Navbar";
-import LoginCard from "../components/LoginCard";
+import LoadingCard from "../components/LoadingCard";
+// import Navbar from "../components/Navbar";
 
-export default function Login() {
+export default function Loading() {
   return (
     <div className="min-h-screen flex flex-col justify-start">
-      <Navbar />
       <div className="dark:bg-gray-700 grow flex justify-center items-center">
-        <LoginCard />
+        <LoadingCard />
       </div>
     </div>
   );
