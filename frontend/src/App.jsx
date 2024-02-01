@@ -19,7 +19,7 @@ function App() {
   return (
     <div className='dark:bg-gray-600'>
       <h1 className='text-5xl text-white'>
-        hi this is the frontend {data ? data : 'loading...'}
+        this is data from backend {data ? data : 'loading...'}
       </h1>
       <h2>
         {data ? data : 'loading...'}
