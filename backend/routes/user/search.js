@@ -1,11 +1,15 @@
 import User from "../../db/userSchema.js";
 
-async function search (req, res){
+async function search(req, res) {
   try {
-    const filter = req.query.filter || "";
+    const filter = req.query.filter.trim();
+    if (filter === "")
+      return res.status(400).send({
+        message: "Filter is required",
+        success: false,
+      });
     const userId = req.userId;
-    
-    // find user with username/email having filter and only 10 results
+
     const users = await User.find({
       $or: [{ username: { $regex: filter } }, { email: { $regex: filter } }],
     }).limit(10);
@@ -27,7 +31,6 @@ async function search (req, res){
       success: false,
     });
   }
-};
-
+}
 
 export default search;

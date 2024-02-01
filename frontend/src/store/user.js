@@ -10,3 +10,14 @@ export const userDataAtom = atom({
   },
 });
 
+
+export const searchValueAtom = atom({
+  key: "searchValueAtom",
+  default: "",
+});
+
+export const searchResultsAtom = atom({
+  key: "searchResultsAtom",
+  default: [],
+});
+

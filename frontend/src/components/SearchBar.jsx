@@ -1,7 +1,25 @@
+import { useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
+import { useSetRecoilState } from "recoil";
+import { searchValueAtom } from "../store/user";
+import useDebounce from "../hooks/useDeboune";
+
 export default function SearchBar() {
+  const [searchInput, setSearchInput] = useState("");
+
+  const setSearchValue = useSetRecoilState(searchValueAtom);
+  useDebounce(() => {
+    setSearchValue(searchInput);
+  }, 1000);
+
   return (
-    <form className="flex items-center w-1/2">
+    <form
+      className="flex items-center w-1/2"
+      onSubmit={(e) => {
+        e.preventDefault();
+        setSearchValue(searchInput);
+      }}
+    >
       <label htmlFor="simple-search" className="sr-only">
         Search
       </label>
@@ -15,6 +33,9 @@ export default function SearchBar() {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search username or email"
           required
+          onChange={(e) => {
+            setSearchInput(e.target.value);
+          }}
         />
       </div>
       <button
