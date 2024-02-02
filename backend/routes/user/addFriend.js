@@ -15,6 +15,14 @@ async function addFriend(req, res) {
       });
     }
 
+
+    if (friend._id.toString() === userId) {
+      return res.status(400).send({
+        message: "You cannot add yourself as a friend",
+        success: false
+      });
+    }
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send({

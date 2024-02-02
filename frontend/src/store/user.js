@@ -10,14 +10,15 @@ export const userDataAtom = atom({
   },
 });
 
-
-export const searchValueAtom = atom({
-  key: "searchValueAtom",
-  default: "",
-});
-
 export const searchResultsAtom = atom({
   key: "searchResultsAtom",
   default: [],
 });
 
+export const currentFriendAtom = atom({
+  key: "currentFriendAtom",
+  default: {
+    name : null,
+    username: null,
+  },
+});

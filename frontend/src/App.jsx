@@ -7,9 +7,9 @@ import SignupCard from "./components/SignupCard";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen dark:bg-gray-700">
+    <div className="flex flex-col min-h-screen h-auto dark:bg-gray-700">
       <Navbar />
-      <div className="grow flex justify-center flex-col items-center">
+      <div className="flex grow justify-center flex-col items-center relative">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<LoginCard />} />

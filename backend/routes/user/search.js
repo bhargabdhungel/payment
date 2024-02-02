@@ -12,13 +12,13 @@ async function search(req, res) {
 
     const users = await User.find({
       $or: [{ username: { $regex: filter } }, { email: { $regex: filter } }],
-    }).limit(10);
+    }).limit(5);
 
     return res.json({
       message: "Users fetched successfully",
       success: true,
       result: users
-        .filter((user) => user._id !== userId)
+        .filter((user) => user._id.toString() !== userId)
         .map((user) => ({
           name: user.name,
           username: user.username,

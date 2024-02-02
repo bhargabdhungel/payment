@@ -1,16 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import { useSetRecoilState } from "recoil";
-import { searchValueAtom } from "../store/user";
+import { searchResultsAtom} from "../store/user";
 import useDebounce from "../hooks/useDeboune";
+import axios from "axios";
 
 export default function SearchBar() {
   const [searchInput, setSearchInput] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
-  const setSearchValue = useSetRecoilState(searchValueAtom);
+  const setSearchResults = useSetRecoilState(searchResultsAtom);
+
   useDebounce(() => {
     setSearchValue(searchInput);
   }, 1000);
+
+  useEffect(() => {
+    const search = async () => {
+      if (!searchValue) return setSearchResults([]);
+      const token = localStorage.getItem("token");
+      try {
+        const response = await axios.get(
+          import.meta.env.VITE_SERVER + "/api/user/search?filter=" + searchValue,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setSearchResults(response.data.result);
+      } catch (err) {
+        console.error("err :: ", err.message);
+        setSearchResults([]);
+      }
+    };
+    search();
+  }, [searchValue, setSearchResults]);
 
   return (
     <form
