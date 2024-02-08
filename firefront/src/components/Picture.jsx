@@ -1,9 +1,11 @@
-import { auth } from "../firebase";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "../store/user";
 
 function Content() {
-  const pic = auth.currentUser?.photoURL;
+  const user = useRecoilValue(userAtom);
+  const pic = user.profilePic;
   if (pic) return <img src={pic} alt="profile" />;
-  const name = auth.currentUser?.displayName;
+  const name = user.name;
   const shortName = name
     ?.split(" ")
     .map((word) => word[0])
@@ -32,11 +34,13 @@ function Content() {
   );
 }
 
-export default function Picture({onClick}) {
+// eslint-disable-next-line react/prop-types
+export default function Picture({ onClick }) {
   return (
-    <div 
-    onClick={onClick}
-    className="relative cursor-pointer inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+    <div
+      onClick={onClick}
+      className="relative cursor-pointer inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600"
+    >
       <Content />
     </div>
   );

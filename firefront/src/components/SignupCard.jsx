@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingCard from "./LoadingCard";
-import { auth } from "../firebase";
-import { createUserWithEmailAndPassword} from "firebase/auth";
+import { auth, db } from "../firebase";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+
+import { doc, setDoc } from "firebase/firestore";
+import { useSetRecoilState } from "recoil";
+import { userAtom } from "../store/user";
 
 export default function SignupCard() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const setUser = useSetRecoilState(userAtom);
   if (loading) return <LoadingCard />;
   return (
     <div className="mx-auto my-auto w-full flex justify-center max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -22,11 +30,35 @@ export default function SignupCard() {
             password: e.target.password.value,
           };
           try {
-            await createUserWithEmailAndPassword(
+
+            // Create user with email and password also set user's display name
+            const resp = await createUserWithEmailAndPassword(
               auth,
               data.email,
               data.password
             );
+            await updateProfile(auth.currentUser, {
+              displayName: data.name,
+            });
+
+            // Add user to firestore
+            const docRef = doc(db, "users", resp.user.uid);
+            await setDoc(docRef, {
+              name : data.name,
+              username: data.username,
+              friends: [],
+            });
+
+            // updating the local state            
+            setUser({
+              metadata : resp.user.metadata,
+              uid: resp.user.uid,
+              email: data.email,
+              username: data.username,
+              name: data.name,
+              profilePic: resp.user.photoURL,
+            });
+
             setLoading(false);
             navigate("/", { replace: true });
           } catch (err) {

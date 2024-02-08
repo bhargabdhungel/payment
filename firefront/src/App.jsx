@@ -4,8 +4,11 @@ import LoginCard from "./components/LoginCard";
 import Dashboard from "./components/Dashboard";
 import SignupCard from "./components/SignupCard";
 import ResetPassword from "./components/ResetPassword";
+import useAuth from "./hooks/useAuth";
+import SetUsername from "./components/SetUsername";
 
 function App() {
+  useAuth();
   return (
     <div className="flex flex-col min-h-screen h-auto dark:bg-gray-700">
       <Navbar />
@@ -15,6 +18,7 @@ function App() {
           <Route path="/login" element={<LoginCard />} />
           <Route path="/signup" element={<SignupCard />} />
           <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/setUsername" element={<SetUsername />} />
         </Routes>
       </div>
     </div>
