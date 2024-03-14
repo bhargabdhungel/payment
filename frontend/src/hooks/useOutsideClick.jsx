@@ -6,12 +6,9 @@ export default function useOutsideClick(ref, callback) {
       callback();
     }
   };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
-    document.addEventListener("touchstart", handleClick);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-      document.removeEventListener("touchstart", handleClick);
-    };
+    return () => document.removeEventListener("mousedown", handleClick);
   });
 }
